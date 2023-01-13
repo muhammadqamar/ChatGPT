@@ -20,18 +20,38 @@ export default function Home() {
             cols="10"
             rows="8"
           ></textarea>
+
+          <p className="p">What Kind of output do you want?</p>
+
+          <div className="select-option">
+            <select className=" p" id="cars">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
+          </div>
+          <div className="input-radio">
+            <input type="radio" id="to-the-point" name="detail" value="to-the-point" />
+            <label for="to-the-point" className="p">
+              To-The-Point
+            </label>
+          </div>
+
+          <div className="input-radio">
+            <input type="radio" id="concise" name="detail" value="concise" />
+            <label for="concise" className="p">
+              Concise
+            </label>
+          </div>
+
+          <div className="input-radio">
+            <input type="radio" id="detailed" name="detail" value="detailed" />
+            <label for="detailed" className="p">
+              Detailed
+            </label>
+          </div>
         </form>
-
-        <p className="p">What Kind of output do you want?</p>
-
-        <div className="select-option">
-          <select className=" p" id="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
-          </select>
-        </div>
 
         <button className="primary-btn p">Generate Summary</button>
       </div>
