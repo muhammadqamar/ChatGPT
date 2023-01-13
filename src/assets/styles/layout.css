@@ -1,0 +1,48 @@
+* {
+  @apply box-border p-0 m-0;
+}
+
+body {
+  @apply bg-black text-yellow-50;
+}
+
+.container {
+  @apply max-w-[1440px]  mx-auto;
+}
+
+/* button */
+.primary-btn {
+  @apply w-[max-content] h-auto py-2 px-3 flex items-center justify-center text-xl leading-5 bg-[#b5ff23] text-black rounded-md;
+}
+
+/* p */
+
+.p {
+  @apply text-[18px] leading-7 font-normal;
+}
+
+.text-atea {
+  @apply text-zinc-800 w-full px-7 py-5 border-none outline-none shadow-md shadow-yellow-50/50 rounded-md mt-10;
+}
+
+.select-option {
+  @apply relative w-[250px] h-auto mt-6;
+}
+.select-option select {
+  @apply w-full py-2 px-3 rounded-md text-zinc-800 outline-none relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-option::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 16px;
+  height: 16px;
+  background-image: url("https://img.icons8.com/ios-filled/512/expand-arrow--v1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
