@@ -12,7 +12,7 @@ body {
 
 /* button */
 .primary-btn {
-  @apply w-[max-content] h-auto py-2 px-3 flex items-center justify-center text-xl leading-5 bg-[#d9903b] text-black rounded-md;
+  @apply w-[max-content] h-auto py-2 px-3 flex items-center justify-center text-xl leading-5 bg-[#d9903b] text-black rounded-md !important;
 }
 
 /* p */
@@ -34,7 +34,7 @@ body {
 }
 
 .text-atea {
-  @apply text-zinc-800 w-full px-7 py-5 border-none outline-none shadow-md shadow-yellow-50/50 rounded-md mt-10;
+  @apply text-zinc-800 w-full px-7 py-5 border-none outline-none shadow-md shadow-yellow-50/50 rounded-md ;
 }
 
 .select-option {
@@ -57,4 +57,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+.charcter-length-block .input_field input  {
+  height: 42px;
+  border-radius: 6px;
+  color: black;
+  padding: 10px;
 }

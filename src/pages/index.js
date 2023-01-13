@@ -62,7 +62,7 @@ export default function Home() {
     if (user) {
       const { pathname } = Router;
       if (pathname == "/") {
-        Router.push("/dashboard");
+        Router.push("/createSummary");
       }
     }
   });
