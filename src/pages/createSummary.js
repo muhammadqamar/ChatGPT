@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
-import axios from "axios";
+
 import Spinner from "react-bootstrap/Spinner";
 import { Formik } from "formik";
 import Navbar from "../components/laypout/nav";
 export default function Home() {
   const [textSummary, settextSummary] = useState("");
   const [laoder, setlaoder] = useState(false);
+  const [word, setWord] = useState('');
+  const [character, setCharacter] = useState('');
+  const [counterCheck, setCounterCheck] = useState(0);
+  const [resultHistory, setresultHistory] = useState([]);
   function Spinloader() {
     return (
       <Spinner animation="border" role="status">
@@ -39,15 +42,16 @@ export default function Home() {
             }
             return errors;
           }}
-          onSubmit={async (values, actions) => {
+          onSubmit={async (values, actions, setFieldValue) => {
             var summary;
             setlaoder(true);
+
             console.log("val", values.s_type);
             if (values.textarea && values.s_type) {
               // const data = values.s_type.concat(`\n\n ${values.textarea}`);
               if (textSummary) {
                 summary = textSummary.concat(
-                  ` there are ${values.s_character} character and ${values.s_alpha} alphabets in this summary`
+                  `. There are ${character} alphabets and ${word} words in this summary`
                 );
               }
               fetch("/api/summarize", {
@@ -61,7 +65,11 @@ export default function Home() {
                 .then((data) => {
                   console.log("Success:", data);
                   settextSummary(data.choices[0].text);
+                  setresultHistory([...resultHistory,data.choices[0].text])
+                  setCharacter(data.choices[0].text?.length )
+                  setWord( data.choices[0].text?.split(" ")?.length )
                   setlaoder(false);
+                  setCounterCheck(counterCheck+1)
                 })
                 .catch((error) => {
                   console.error("Error:", error);
@@ -105,54 +113,60 @@ export default function Home() {
               </div>
               {textSummary && (
                 <>
-                  <div className="charcter-length-block flex mb-5">
+                  <div className="flex mb-5 charcter-length-block">
                     <div className="mr-3">
                       <p className="p">Characters</p>
                       <div className="input_field">
                         <input
                           name="s_character"
                           type="text"
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.s_character}
+                          onChange={e=>setCharacter(e.target.value)}
+
+                          value={String(character)}
                         />
                       </div>
                     </div>
                     <div>
-                      <p className="p">Alphabets</p>
+                      <p className="p">Words</p>
                       <div className="input_field">
                         <input
                           name="s_alpha"
                           type="text"
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.s_alpha}
+                          onChange={e=>setWord(e.target.value)}
+                          value={word}
                         />
                       </div>
                     </div>
                   </div>
                   <h2 className="text-bold"> Summarize Text</h2>
                   <textarea
-                    className="p text-atea mb-3"
+                    className="mb-3 p text-atea"
                     name="s_text"
                     id=""
                     placeholder="write your message."
                     cols="10"
                     rows="8"
                     value={textSummary}
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    readOnly
+                    onChange={(e)=>settextSummary(e.target.value)}
+
                   ></textarea>
                 </>
               )}
 
               <button className="primary-btn p" type="submit">
-                {laoder ? <Spinloader /> : "Generate Summary"}
+                {laoder ? <Spinloader /> : counterCheck === 0 ? "Generate Summary" : `Generate Summary ${counterCheck} Attempt` }
               </button>
             </form>
           )}
         </Formik>
+        <br />
+        {!!resultHistory.length && <h1 className="text-['30px']">Each attempt results</h1>}
+        {resultHistory?.map((data, counter)=>{
+          return <>
+          <br />
+          <p>Attempt {counter+1}</p>
+          <p>{data}</p><br /></>
+        })}
       </div>
     </>
   );
